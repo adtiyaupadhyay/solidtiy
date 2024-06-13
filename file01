@@ -1,0 +1,26 @@
+pragma solidity >=0.6.12 <0.9.0;
+
+// SPDX-License-Identifier: MIT
+
+contract CustomToken {
+    // State variables
+    string public name = "META";
+    string public symbol = "MTA";
+    uint256 public supply = 0;
+
+    // Balances mapping
+    mapping(address => uint256) public accountBalances;
+
+    // Function to mint tokens
+    function issueTokens(address recipient, uint256 amount) public {
+        supply += amount;
+        accountBalances[recipient] += amount;
+    }
+
+    // Function to burn tokens
+    function destroyTokens(address holder, uint256 amount) public {
+        require(accountBalances[holder] >= amount, "Not enough tokens to burn");
+        supply -= amount;
+        accountBalances[holder] -= amount;
+    }
+}
